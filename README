@@ -1,0 +1,16 @@
+This is an example app which implements a Google Maps plugin on the item page, populated from EXIF GPS information.
+
+== Installation  ==
+
+To install this plugin, just place the entire directory under
+/opt/cantemo/portal/portal/plugins
+
+
+== What's in the plugin ==
+
+The app consists of a single plugin in plugins.py
+
+This plugin hooks into the MediaViewLeftContentBottom plugin block and
+displays a google map in an iframe in the lower left hand corner of
+the item page, based on the EXIF GPS coordinates embedded in a photo.
+
