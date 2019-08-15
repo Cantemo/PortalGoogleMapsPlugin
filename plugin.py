@@ -10,7 +10,6 @@ log = logging.getLogger(__name__)
 
 # Add the google snippet to each page, via the header_css_js plugin block
 class MapsPluginBlock(Plugin):
-    
     implements(IPluginBlock)
 
     def __init__(self):
@@ -18,7 +17,6 @@ class MapsPluginBlock(Plugin):
         self.name = "MediaViewLeftContentBottom"
         self.plugin_guid = "3586BD21-DD4D-4BB7-803E-198AC1FDC3A2"
         log.debug("Initiated MapsPluginBlock")
-
 
     def convert_to_degrees(self, coord):
         s = coord.split(",")
@@ -37,11 +35,9 @@ class MapsPluginBlock(Plugin):
         long = metadata.getFieldByName('xmp_exif_GPSLongitude').getFirstFieldValue()
         lat_in_deg = self.convert_to_degrees(lat)
         long_in_deg = self.convert_to_degrees(long)
-        coords = "%s,%s" %(lat_in_deg, long_in_deg)
+        coords = "%s,%s" % (lat_in_deg, long_in_deg)
 
-        return {'guid':self.plugin_guid, 'template': ret, 'context' : { 'coords' : coords } }
-
-pluginblock = MapsPluginBlock() 
+        return {'guid': self.plugin_guid, 'template': ret, 'context': {'coords': coords}}
 
 
-
+MapsPluginBlock()
