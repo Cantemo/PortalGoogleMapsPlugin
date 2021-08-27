@@ -13,6 +13,7 @@ curl -L https://github.com/Cantemo/PortalGoogleMapsPlugin/archive/master.zip > P
 unzip PortalGoogleMapsPlugin-master.zip 
 mv PortalGoogleMapsPlugin-master /opt/cantemo/portal/portal/plugins/
 chown -R www-data:www-data /opt/cantemo/portal/portal/plugins/PortalGoogleMapsPlugin-master
+sudo service portal-web restart
 ```
 
 ## What's in the plugin
