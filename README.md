@@ -11,8 +11,8 @@ For example, on a Portal system:
 ```
 curl -L https://github.com/Cantemo/PortalGoogleMapsPlugin/archive/master.zip > PortalGoogleMapsPlugin-master.zip 
 unzip PortalGoogleMapsPlugin-master.zip 
-mv PortalGoogleMapsPlugin-master /opt/cantemo/portal/portal/plugins/
-chown -R www-data:www-data /opt/cantemo/portal/portal/plugins/PortalGoogleMapsPlugin-master
+mv PortalGoogleMapsPlugin-master /opt/cantemo/portal/portal/plugins/PortalGoogleMapsPlugin/
+chown -R www-data:www-data /opt/cantemo/portal/portal/plugins/PortalGoogleMapsPlugin
 sudo service portal-web restart
 ```
 
