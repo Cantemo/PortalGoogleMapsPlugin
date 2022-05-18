@@ -2,11 +2,11 @@ This is an example app which implements a Google Maps plugin on the item page, p
 
 ## Installation
 
-To install this plugin, just place the entire directory under `/opt/cantemo/portal/portal/plugins`.
+To install this plugin, place the entire directory under `/opt/cantemo/portal/portal/plugins/`.
 
 Make sure the directory is readable by the Portal web-workers (default `www-data`).
 
-For example, on a Portal system:
+For example, on a Portal system run these commands:
 
 ```
 curl -L https://github.com/Cantemo/PortalGoogleMapsPlugin/archive/master.zip > PortalGoogleMapsPlugin-master.zip 
@@ -24,3 +24,5 @@ This plugin hooks into the MediaViewLeftContentBottom plugin block and
 displays a google map in an iframe in the lower left hand corner of
 the item page, based on the EXIF GPS coordinates embedded in a photo.
 
+Please note that "Parse XMP" must be enabled in System Settings > Metadata Indexing when the
+file is ingested, otherwise all XMP data will be ignored.

@@ -2,9 +2,12 @@
 .. Copyright 2012-2014 Cantemo AB. All Rights Reserved
 """
 
-from portal.pluginbase.core import *
-from portal.generic.plugin_interfaces import IPluginBlock
 import logging
+
+from portal.generic.plugin_interfaces import IPluginBlock
+from portal.pluginbase.core import Plugin
+from portal.pluginbase.core import implements
+
 log = logging.getLogger(__name__)
 
 
@@ -22,22 +25,38 @@ class MapsPluginBlock(Plugin):
         s = coord.split(",")
         degrees = s[0]
         minutes = s[1][:-1]
-        direction = s[1][-1]
-        return float(degrees)+float(minutes)/60
+        return float(degrees) + float(minutes) / 60
 
     # Function called by the plugin framework. Returns the rendered template.
     def return_string(self, tagname, *args):
-        ret = 'maps/google_map.html'
+        ret = "maps/google_map.html"
         context = args[1]
-        item = context['item']
+        item = context["item"]
         metadata = item.getMetadata()[0]
-        lat = metadata.getFieldByName('xmp_exif_GPSLatitude').getFirstFieldValue()
-        long = metadata.getFieldByName('xmp_exif_GPSLongitude').getFirstFieldValue()
-        lat_in_deg = self.convert_to_degrees(lat)
-        long_in_deg = self.convert_to_degrees(long)
-        coords = "%s,%s" % (lat_in_deg, long_in_deg)
 
-        return {'guid': self.plugin_guid, 'template': ret, 'context': {'coords': coords}}
+        coords = error_message = None
+
+        lat_field = metadata.getFieldByName("xmp_exif_GPSLatitude")
+        long_field = metadata.getFieldByName("xmp_exif_GPSLongitude")
+        if lat_field and long_field:
+            lat = lat_field.getFirstFieldValue()
+            long = long_field.getFirstFieldValue()
+            try:
+                lat_in_deg = self.convert_to_degrees(lat)
+                long_in_deg = self.convert_to_degrees(long)
+                coords = f"{lat_in_deg},{long_in_deg}"
+            except Exception as e:
+                error_message = f"Failed to convert coordinates ({lat}, {long} to degrees: {repr(e)})"
+                log.exception(error_message)
+        else:
+            error_message = "EXIF values GPSLatitude and GPSLongitude not found on item."
+            log.debug(error_message)
+
+        return {
+            "guid": self.plugin_guid,
+            "template": ret,
+            "context": {"coords": coords, "error_message": error_message},
+        }
 
 
 MapsPluginBlock()
